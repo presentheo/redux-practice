@@ -6,4 +6,9 @@ export const addTodo = (text) => {
     text
   }
 }
-
+export const removeTodo = (index) => {
+  return {
+    type: types.REMOVE_TODO,
+    index
+  }
+}

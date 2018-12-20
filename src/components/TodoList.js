@@ -15,7 +15,9 @@ class TodoList extends Component {
           {this.props.todos.map((todo, index) => {
             return (
               <li key={index}
-              >{todo}</li>
+              >{todo.text}
+                <button onClick={() => this.props.onRemoveClick(index)}>remove</button>
+              </li> 
             )
           })}
         </ul>

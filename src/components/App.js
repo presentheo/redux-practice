@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { createStore } from 'redux';
-import { initialState, todoApp } from '../reducers/reducer';
-import { addTodo } from '../actions';
+import { connect } from 'react-redux';
+import { addTodo, removeTodo } from '../actions';
 import TodoList from './TodoList';
 
 class App extends Component {
@@ -9,19 +8,23 @@ class App extends Component {
     return (
       <div className="App">
         <TodoList 
-          todos={initialState.todos}
-          onAddClick={(text) => store.dispatch(addTodo(text))}
+          todos={this.props.todos}
+          onAddClick={(text) => this.props.onAddTodo(text)}
+          onRemoveClick={(index) => this.props.onRemoveTodo(index)}
         />
       </div>
     );
   }
 }
 
-let store = createStore(todoApp);
+const mapStateToProps = (state) => {
+  return {todos: state.todos};
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddTodo: (text) => dispatch(addTodo(text)),
+    onRemoveTodo: (index) => dispatch(removeTodo(index))
+  }
+}
 
-store.subscribe(() => {
-  console.log(store.getState());
-})
-
-
-export default App; 
+export default connect(mapStateToProps, mapDispatchToProps)(App);
